@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 
 # 👉 Import all static data from separate file
 from rwa_data import (
@@ -360,32 +359,8 @@ with tab_provisions:
         [{"Item": k, "Amount (₹)": v} for k, v in PROVISIONS.items()]
     ).sort_values("Amount (₹)", ascending=False)
 
-    col1, col2 = st.columns(2)
-
-    # --- LEFT SIDE: TABLE ---
-    with col1:
-        st.subheader("Major Provisions / Capex Items")
-        st.table(df_prov)
-
-        # Estimate table height dynamically
-        table_height = 40 * len(df_prov) + 120  # row height * rows + header padding
-
-    # --- RIGHT SIDE: MATCHING-HEIGHT CHART ---
-    with col2:
-        st.subheader("Chart View")
-
-        fig = px.bar(
-            df_prov,
-            x="Amount (₹)",
-            y="Item",
-            orientation="h",
-            title="",
-        )
-        fig.update_layout(
-            height=table_height,     # 👈 MATCH HEIGHT TO TABLE
-            margin=dict(l=10, r=10, t=10, b=10),
-        )
-        st.plotly_chart(fig, use_container_width=True)
+    st.subheader("Major Provisions / Capex Items")
+    st.table(df_prov)
 
     col3, col4, col5 = st.columns(3)
     with col3:
@@ -400,7 +375,10 @@ with tab_provisions:
 
     st.markdown("### Normalized view (over 9 months)")
     st.metric("Per Month Provision (₹)", f"{per_month_provision:,.0f}")
-    st.metric("Provisions / sq ft / month (₹)", f"{provision_per_sqft_per_month:.2f}")
+    st.metric(
+        "Provisions / sq ft / month (₹)",
+        f"{provision_per_sqft_per_month:.2f}",
+    )
 
     st.info(
         "Provisions are distributed over 9 months and normalized by total built-up area "
