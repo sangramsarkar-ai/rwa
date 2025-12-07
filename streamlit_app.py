@@ -111,12 +111,9 @@ st.markdown(
 st.markdown(
     """
     <div class="glass-card" style="margin-bottom: 1.5rem;">
-        <h1>🏙️ Candeur Sunshine Residents Welfare Association</h1>
+        <h1>🏙️ CSRWA</h1>
         <p style="font-size:0.95rem; color:#6b7280; margin-bottom:0.4rem;">
-            Introductory General Body Meeting • Maintenance & Cost Overview Dashboard
-        </p>
-        <p style="font-size:0.9rem; color:#4b5563;">
-            Track manpower, running costs, provisions, and <strong>per sq ft monthly maintenance</strong> with a clear, modern view.
+            Introductory General Body Meeting • 07/12/2025 11:00 AM
         </p>
     </div>
     """,
