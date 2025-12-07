@@ -74,7 +74,7 @@ RUNNING_COST = {
     "Drinking Water": 1_200,
 }
 
-TOTAL_RUNNING = 1_445_600  # Total monthly running cost
+TOTAL_RUNNING = 1_343_600  # Total monthly running cost
 
 # Provisions / Capex heads
 PROVISIONS = {
