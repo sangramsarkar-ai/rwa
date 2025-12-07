@@ -65,16 +65,16 @@ MANPOWER_DEC = {
 
 # Monthly running cost heads
 RUNNING_COST = {
-    "Water": 525_000,
+    "Water": 535_000,
     "Idencies FM": 550_000,
     "Diesel": 46_000,
     "Electricity": 170_000,
     "Garbage": 36_400,
-    "R&M": 15_000,
+    "R&M": 20_000,
     "Drinking Water": 1_200,
 }
 
-TOTAL_RUNNING = 1_343_600  # Total monthly running cost
+TOTAL_RUNNING = 1_358_600  # Total monthly running cost
 
 # Provisions / Capex heads
 PROVISIONS = {
@@ -91,6 +91,8 @@ PROVISIONS = {
     "Speed breakers": 10_000,
     "Lights": 13_000,
     "Ladder": 12_000,
+    "Rebore": 0,
+    "Rainwater Harvesting": 0,
 }
 
 TOTAL_PROVISIONS = 2_297_178  # Total provisions / capex
