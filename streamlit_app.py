@@ -292,6 +292,7 @@ with tab_maint_overview:
   - Implementing necessary process changes  
 - Partnered with **Idencies Facility Management Services** for day-to-day operations.  
 - Facility Manager role was restructured after initial transition challenges.
+- Partnered with **MyGAte** for gate management, ERP for Maintenance tracking, Help desk.
         """
     )
 
