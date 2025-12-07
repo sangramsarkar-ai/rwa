@@ -18,10 +18,10 @@ from rwa_data import (
 st.set_page_config(
     page_title="Candeur Sunshine RWA – GBM Overview",
     page_icon="🏙️",
-    layout="wide",
+    layout="wide",  # wide works fine, we'll control responsiveness via CSS
 )
 
-# ---------- CUSTOM STYLING (MODERN / GLASS) ----------
+# ---------- CUSTOM STYLING (MODERN / GLASS + MOBILE) ----------
 st.markdown(
     """
     <style>
@@ -31,11 +31,11 @@ st.markdown(
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    /* Main block container padding */
+    /* Main block container */
     .main .block-container {
-        padding-top: 1.5rem;
-        padding-bottom: 2rem;
-        max-width: 1200px;
+        padding-top: 1.2rem;
+        padding-bottom: 1.8rem;
+        max-width: 1100px;
     }
 
     /* Sidebar styling */
@@ -54,13 +54,13 @@ st.markdown(
 
     /* Glass card */
     .glass-card {
-        background: rgba(255, 255, 255, 0.86);
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 18px;
-        padding: 1.2rem 1.4rem;
-        margin-bottom: 1.2rem;
+        padding: 1.1rem 1.2rem;
+        margin-bottom: 1.1rem;
         box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(10px);
     }
 
     .glass-card h2, .glass-card h3 {
@@ -86,12 +86,12 @@ st.markdown(
         color: #111827;
     }
 
-    /* Metric label tweak */
+    /* Metrics */
     [data-testid="stMetricValue"] {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
     }
     [data-testid="stMetricLabel"] {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: #6b7280;
@@ -101,6 +101,40 @@ st.markdown(
     .dataframe {
         border-radius: 12px;
         overflow: hidden;
+    }
+
+    /* --- Mobile adjustments --- */
+    @media (max-width: 768px) {
+        .main .block-container {
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+            padding-top: 0.8rem;
+        }
+
+        h1 {
+            font-size: 1.35rem;
+        }
+
+        .glass-card {
+            padding: 0.9rem 0.9rem;
+        }
+
+        .glass-card h2 {
+            font-size: 1.05rem;
+        }
+
+        .glass-card p,
+        .glass-card li,
+        .glass-card span {
+            font-size: 0.9rem;
+        }
+
+        [data-testid="stMetricValue"] {
+            font-size: 1.1rem;
+        }
+        [data-testid="stMetricLabel"] {
+            font-size: 0.7rem;
+        }
     }
     </style>
     """,
@@ -227,6 +261,7 @@ with tab_agenda:
 with tab_exec:
     glass_container("👥 Executive Committee")
 
+    # On mobile, columns will stack automatically
     col1, col2 = st.columns(2)
     half = len(EXEC_MEMBERS) // 2
 
@@ -277,8 +312,10 @@ with tab_fm_staff:
     )
 
     st.subheader("Key Support Staff")
+
+    # Use dataframe (scrollable horizontally on mobile if needed)
     df_staff = pd.DataFrame(SUPPORT_STAFF)
-    st.dataframe(df_staff, use_container_width=True)
+    st.dataframe(df_staff, use_container_width=True, height=min(400, 60 * len(df_staff) + 60))
 
     st.caption(
         "This structure ensures quicker response, accountability, and smoother daily operations."
@@ -313,7 +350,9 @@ with tab_manpower:
     df_comp = pd.DataFrame(comp_rows)
 
     st.subheader("Combined Manpower View")
-    st.dataframe(df_comp, use_container_width=True)
+
+    # Dataframe for better mobile scroll behaviour
+    st.dataframe(df_comp, use_container_width=True, height=min(450, 50 * len(df_comp) + 70))
 
     st.info(
         "- **Housekeeping Staff** increased from 8 → 10 (**+2**) – better cleanliness and coverage.\n"
@@ -332,9 +371,9 @@ with tab_running:
     )
 
     st.subheader("Cost Breakdown")
-    st.table(df_cost)
 
-    # 👇 Chart removed – only metrics now
+    st.dataframe(df_cost, use_container_width=True, height=min(400, 50 * len(df_cost) + 70))
+
     st.metric("Total Monthly Running Cost (₹)", f"{TOTAL_RUNNING:,.0f}")
     st.metric("Monthly Running Cost / sq ft (₹)", f"{running_per_sqft:.2f}")
 
@@ -345,9 +384,6 @@ with tab_running:
 
     glass_container_end()
 
-
-
-
 # ---------- TAB: PROVISIONS / CAPEX ----------
 with tab_provisions:
     glass_container("📦 Provisions & Capital Expenditure")
@@ -357,7 +393,7 @@ with tab_provisions:
     ).sort_values("Amount (₹)", ascending=False)
 
     st.subheader("Major Provisions / Capex Items")
-    st.table(df_prov)
+    st.dataframe(df_prov, use_container_width=True, height=min(450, 50 * len(df_prov) + 70))
 
     col3, col4, col5 = st.columns(3)
     with col3:
@@ -384,11 +420,11 @@ with tab_provisions:
 
     glass_container_end()
 
-
 # ---------- TAB: MAINTENANCE REVISION (Per Sq Ft Summary) ----------
 with tab_revision:
     glass_container("📊 Maintenance Revision – Per Sq Ft Summary")
 
+    # On mobile, these 3 columns will gracefully stack
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Total Built-up Area (sq ft)", f"{TOTAL_SQFT:,.0f}")
